@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang = "en">
+   <head></head>
+   <body>
+      <h3>
+         <a href = "{{ url_for('show_all') }}">Home</a>
+      </h3>
+
+      <hr/>
+      {%- for message in get_flashed_messages() %}
+         {{ message }}
+      {%- endfor %}
+
+      <h3>Search (<a href = "{{ url_for('new') }}">New Search
+         </a>)</h3>
+
+      <table border = 1>
+         <thead>
+            <tr>
+               <td>Url</td>
+               <td>Keyword</td>
+               <td>Timestamp</td>
+               <td>Load Time</td>
+               <td>Hits</td>
+            </tr>
+         </thead>
+
+         {% for record in records %}
+            <tr>
+               <td>{{ record.url }}</td>
+               <td>{{ record.keyword }}</td>
+               <td>{{ record.time }}</td>
+               <td>{{ record.load_time }}</td>
+               <td>{{ record.hits }}</td>
+            </tr>
+         {% endfor %}
+      </table>
+   </body>
+</html>
