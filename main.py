@@ -20,11 +20,17 @@ def new():
         if not request.form['url'] or not request.form['keyword']:
             flash('Please enter all the fields', 'error')
         else:
-            s = ScrapeModel(*web.Web().scrape(request.form['url'], request.form['keyword']))
+            try:
+                s = ScrapeModel(*web.Web().scrape(request.form['url'], request.form['keyword']))
 
-            db.session.add(s)
-            db.session.commit()
-            flash('Record was successfully added')
+                db.session.add(s)
+                db.session.commit()
+                flash('Record was successfully added')
+            except:
+                flash('Unexpected error occurred', 'error')
+            finally:
+                db.session.close()
+
             return redirect(url_for('show_all'))
     return render_template('new.html')
 

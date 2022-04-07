@@ -29,7 +29,8 @@ class Web:
         :return:
         """
         start_time = time.time()
-        html = urllib.request.urlopen(url).read()
+        response = urllib.request.urlopen(url)
+        html = response.read()
         elapsed_time = time.time() - start_time
 
         soup = bs4.BeautifulSoup(html, 'html.parser')
@@ -50,5 +51,7 @@ class Web:
                     print(word)
                 except AttributeError:
                     pass
+
+        response.close()
 
         return [url, keyword, start_time, elapsed_time, hits]
